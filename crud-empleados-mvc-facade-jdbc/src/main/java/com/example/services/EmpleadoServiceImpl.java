@@ -1,9 +1,15 @@
 package com.example.services;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.dao.DBConexion;
+import com.example.models.Empleado;
+import com.example.models.Genero;
 
 public class EmpleadoServiceImpl implements EmpleadoService{
 
@@ -29,6 +35,37 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		}
 		 
 		return connectionOk;
+	}
+
+	@Override
+	public List<Empleado> getEmpleados(){
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		try (DBConexion dbConexion = new DBConexion("root", "Temp2026");
+				Connection connection = dbConexion.getConnection()) {
+			
+			ResultSet rs = dbConexion.getEmpleados(connection);
+			
+			while (rs.next()) {
+				
+				empleados.add(
+						Empleado.builder()
+						.id(rs.getInt("id"))
+						.nombre(rs.getString("nombre"))
+						.primerApellido(rs.getString("primerApellido"))
+						.segundoApellido(rs.getString("segundoApellido"))
+						.fechaAlta(rs.getDate("fechaAlta").toLocalDate())
+						.genero(Genero.valueOf(rs.getString("genero")))
+						.salario(new BigDecimal(rs.getDouble("salario")))
+						.departamentos_id(rs.getInt("departamentos_id"))
+						.build()
+						);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	
+		return empleados;
 	}
 
 }

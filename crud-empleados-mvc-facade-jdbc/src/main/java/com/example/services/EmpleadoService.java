@@ -1,9 +1,14 @@
 package com.example.services;
 
 import java.sql.SQLException;
+import java.util.List;
+
+import com.example.models.Empleado;
 
 public interface EmpleadoService {
 	
-	public abstract boolean isConnectionOk() throws SQLException;
+	boolean isConnectionOk() throws SQLException;
+	List<Empleado> getEmpleados();
+	
 	
 }

@@ -6,8 +6,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
+
+import com.example.models.Empleado;
 
 
 public class DBConexion implements AutoCloseable {
@@ -94,5 +97,25 @@ public class DBConexion implements AutoCloseable {
 			e.printStackTrace();
 		}
 		return rs;
+	}
+	
+	
+	
+	//metodo que inserta empleado y sus correos y telefonos en le base de datos
+	// en el marco de una transaccion 
+	
+	public void altaEmpleado(Empleado empleado, List<String> dirCorreos, List<String> numerosTelefono) {
+		
+		// inserta empledos y devuelve el last inserted id en la tabla de empleados
+		String query1;
+		
+		// con el id del empleado, tenemos que insertar sus correos y sus telefonos correspondientes
+		//inserta correos
+		String query2;
+		
+		// inserta telefonos
+		String query3;
+		
+		
 	}
 }
